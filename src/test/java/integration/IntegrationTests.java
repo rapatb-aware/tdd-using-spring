@@ -27,22 +27,22 @@ import com.bank.service.TransferService;
 
 public class IntegrationTests {
 
-    @Test
-    public void transferTenDollars() throws InsufficientFundsException {
-        GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
-        ctx.getEnvironment().setActiveProfiles("dev");
-        ctx.load("classpath:/integration/transfer-service-config.xml");
-        ctx.refresh();
+	@Test
+	public void transferTenDollars() throws InsufficientFundsException {
+		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+		ctx.getEnvironment().setActiveProfiles("dev");
+		ctx.load("classpath:/integration/transfer-service-config.xml");
+		ctx.refresh();
 
-        TransferService transferService = ctx.getBean(TransferService.class);
-        AccountRepository accountRepository = ctx.getBean(AccountRepository.class);
+		TransferService transferService = ctx.getBean(TransferService.class);
+		AccountRepository accountRepository = ctx.getBean(AccountRepository.class);
 
-        assertThat(accountRepository.findById("A123").getBalance(), equalTo(100.00));
-        assertThat(accountRepository.findById("C456").getBalance(), equalTo(0.00));
+		assertThat(accountRepository.findById("A123").getBalance(), equalTo(100.00));
+		assertThat(accountRepository.findById("C456").getBalance(), equalTo(0.00));
 
-        transferService.transfer(10.00, "A123", "C456");
+		transferService.transfer(10.00, "A123", "C456");
 
-        assertThat(accountRepository.findById("A123").getBalance(), equalTo(90.00));
-        assertThat(accountRepository.findById("C456").getBalance(), equalTo(10.00));
-    }
+		assertThat(accountRepository.findById("A123").getBalance(), equalTo(90.00));
+		assertThat(accountRepository.findById("C456").getBalance(), equalTo(10.00));
+	}
 }

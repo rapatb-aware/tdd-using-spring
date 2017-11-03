@@ -4,13 +4,14 @@ import com.bank.service.FeePolicy;
 
 public class FlatFeePolicy implements FeePolicy {
 
-    private final double flatFee;
+	private final double flatFee;
 
-    public FlatFeePolicy(double flatFee) {
-        this.flatFee = flatFee;
-    }
+	public FlatFeePolicy(double flatFee) {
+		this.flatFee = flatFee;
+	}
 
-    public double calculateFee(double transferAmount) {
-        return flatFee;
-    }
+	@Override
+	public double calculateFee(double transferAmount) {
+		return flatFee;
+	}
 }

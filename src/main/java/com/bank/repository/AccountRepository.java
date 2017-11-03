@@ -19,7 +19,7 @@ import com.bank.domain.Account;
 
 public interface AccountRepository {
 
-    Account findById(String srcAcctId);
+	Account findById(String srcAcctId);
 
-    void updateBalance(Account dstAcct);
+	void updateBalance(Account dstAcct);
 }

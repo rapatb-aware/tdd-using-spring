@@ -11,32 +11,34 @@ package com.bank.domain;
  */
 @SuppressWarnings("serial")
 public class InvalidDepositAmountException extends Exception {
-    private double attemptedAmount;
-    /**
-     * Creates a new instance of <code>InvalidDepositAmountException</code> without detail message.
-     */
-    public InvalidDepositAmountException(double attemptedAmount) {
-                this.attemptedAmount = attemptedAmount;
-    }
+	private double attemptedAmount;
 
-    /**
-     * @return the attemptedAmount
-     */
-    public double getAttemptedAmount() {
-        return attemptedAmount;
-    }
+	/**
+	 * Creates a new instance of <code>InvalidDepositAmountException</code>
+	 * without detail message.
+	 */
+	public InvalidDepositAmountException(double attemptedAmount) {
+		this.attemptedAmount = attemptedAmount;
+	}
 
-    /**
-     * @param attemptedAmount the attemptedAmount to set
-     */
-    public void setAttemptedAmount(double attemptedAmount) {
-        this.attemptedAmount = attemptedAmount;
-    }
+	/**
+	 * @return the attemptedAmount
+	 */
+	public double getAttemptedAmount() {
+		return attemptedAmount;
+	}
 
-    @Override
-    public String toString() {
-        return "InvalidDepositAmountException{" + "attemptedAmount=" + attemptedAmount + '}';
-    }
+	/**
+	 * @param attemptedAmount
+	 *            the attemptedAmount to set
+	 */
+	public void setAttemptedAmount(double attemptedAmount) {
+		this.attemptedAmount = attemptedAmount;
+	}
 
-    
+	@Override
+	public String toString() {
+		return "InvalidDepositAmountException{" + "attemptedAmount=" + attemptedAmount + '}';
+	}
+
 }
