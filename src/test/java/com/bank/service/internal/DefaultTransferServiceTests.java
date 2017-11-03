@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.bank.domain.InsufficientFundsException;
+import com.bank.domain.TransactionTimeNotAllowedPeriodException;
 import com.bank.domain.TransferReceipt;
 import com.bank.repository.AccountNotFoundException;
 import com.bank.repository.AccountRepository;
@@ -35,7 +36,7 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testTransfer() throws InsufficientFundsException {
+	public void testTransfer() throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		double transferAmount = 100.00;
 
 		TransferReceipt receipt = transferService.transfer(transferAmount, A123_ID, C456_ID);
@@ -49,7 +50,7 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testInsufficientFunds() {
+	public void testInsufficientFunds() throws TransactionTimeNotAllowedPeriodException {
 		double overage = 9.00;
 		double transferAmount = A123_INITIAL_BAL + overage;
 
@@ -66,7 +67,8 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testNonExistentSourceAccount() throws InsufficientFundsException {
+	public void testNonExistentSourceAccount()
+			throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		try {
 			transferService.transfer(1.00, Z999_ID, C456_ID);
 			fail("expected AccountNotFoundException");
@@ -77,7 +79,8 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testNonExistentDestinationAccount() throws InsufficientFundsException {
+	public void testNonExistentDestinationAccount()
+			throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		try {
 			transferService.transfer(1.00, A123_ID, Z999_ID);
 			fail("expected AccountNotFoundException");
@@ -88,7 +91,7 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testZeroTransferAmount() throws InsufficientFundsException {
+	public void testZeroTransferAmount() throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		try {
 			transferService.transfer(0.00, A123_ID, C456_ID);
 			fail("expected IllegalArgumentException");
@@ -97,7 +100,8 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testNegativeTransferAmount() throws InsufficientFundsException {
+	public void testNegativeTransferAmount()
+			throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		try {
 			transferService.transfer(-100.00, A123_ID, C456_ID);
 			fail("expected IllegalArgumentException");
@@ -106,7 +110,8 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testTransferAmountLessThanOneCent() throws InsufficientFundsException {
+	public void testTransferAmountLessThanOneCent()
+			throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		try {
 			transferService.transfer(0.009, A123_ID, C456_ID);
 			fail("expected IllegalArgumentException");
@@ -115,7 +120,8 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testCustomizedMinimumTransferAmount() throws InsufficientFundsException {
+	public void testCustomizedMinimumTransferAmount()
+			throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		transferService.transfer(1.00, A123_ID, C456_ID); // should be fine
 		transferService.setMinimumTransferAmount(10.00);
 		transferService.transfer(10.00, A123_ID, C456_ID); // fine against new
@@ -129,7 +135,7 @@ public class DefaultTransferServiceTests {
 	}
 
 	@Test
-	public void testNonZeroFeePolicy() throws InsufficientFundsException {
+	public void testNonZeroFeePolicy() throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		double flatFee = 5.00;
 		double transferAmount = 10.00;
 		transferService = new DefaultTransferService(accountRepository, new FlatFeePolicy(flatFee));

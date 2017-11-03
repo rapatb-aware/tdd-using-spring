@@ -22,13 +22,14 @@ import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import com.bank.domain.InsufficientFundsException;
+import com.bank.domain.TransactionTimeNotAllowedPeriodException;
 import com.bank.repository.AccountRepository;
 import com.bank.service.TransferService;
 
 public class IntegrationTests {
 
 	@Test
-	public void transferTenDollars() throws InsufficientFundsException {
+	public void transferTenDollars() throws InsufficientFundsException, TransactionTimeNotAllowedPeriodException {
 		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
 		ctx.getEnvironment().setActiveProfiles("dev");
 		ctx.load("classpath:/integration/transfer-service-config.xml");
