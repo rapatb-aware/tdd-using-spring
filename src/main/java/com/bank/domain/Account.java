@@ -37,22 +37,22 @@ public class Account {
 
 	public void credit(double amount) {
 		assertValid(amount);
-		
+
 		balance += amount;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
-	
+
 	public double getBalance() {
 		return balance;
 	}
-	
+
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	
+
 	private void assertValid(double amount) {
 		if (!(amount > 0.00))
 			throw new IllegalArgumentException("amount must be greater than zero");

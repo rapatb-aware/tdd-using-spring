@@ -13,6 +13,7 @@ import com.bank.domain.InvalidDepositAmountException;
  * @author TwinP
  */
 public interface DepositService {
-    void setMinimumDepositAmount(double minimumDepositAmount);
-    public DepositReceipt deposit(double amount, String destrinationAcc) throws InvalidDepositAmountException;
+	void setMinimumDepositAmount(double minimumDepositAmount);
+
+	public DepositReceipt deposit(double amount, String destrinationAcc) throws InvalidDepositAmountException;
 }
