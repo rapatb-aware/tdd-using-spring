@@ -20,9 +20,14 @@ public class SingleTransactionTimeAllowedPeriodPolicyTest {
 
 	private SingleTransactionTimeAllowedPeriodPolicy startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy(
 			String mockCurrentTime) {
+		return startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy(LocalTime.parse(mockCurrentTime));
+	}
+
+	private SingleTransactionTimeAllowedPeriodPolicy startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy(
+			LocalTime mockCurrentTime) {
 		return new SingleTransactionTimeAllowedPeriodPolicy("22:00", "06:00") {
 			protected LocalTime getCurrentTime() {
-				return LocalTime.parse(mockCurrentTime);
+				return mockCurrentTime;
 			}
 		};
 	}
@@ -58,23 +63,30 @@ public class SingleTransactionTimeAllowedPeriodPolicyTest {
 	}
 
 	@Test
-	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolic_shouldReturnTrue_IfCurrentTimeIsAfterStartAllowedTime() {
+	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy_shouldReturnTrue_IfCurrentTimeIsAfterStartAllowedTime() {
 		assertTrue(startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy("22:00:01").isTransactionAllowedNow());
 	}
 
 	@Test
-	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolic_shouldReturnTrue_IfCurrentTimeIsBeforeEndAllowedTime() {
+	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy_shouldReturnTrue_IfCurrentTimeIsBeforeEndAllowedTime() {
 		assertTrue(startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy("05:59:59").isTransactionAllowedNow());
 	}
 
 	@Test
-	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolic_shouldReturnFalse_IfCurrentTimeIsAfterEndAllowedTime() {
+	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy_shouldReturnFalse_IfCurrentTimeIsAfterEndAllowedTime() {
 		assertFalse(
 				startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy("06:00:01").isTransactionAllowedNow());
 	}
 
 	@Test
-	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolic_shouldReturnTrue_IfCurrentTimeIsMidnight() {
-		assertTrue(startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy("00:00").isTransactionAllowedNow());
+	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy_shouldReturnTrue_IfCurrentTimeIsMidnight() {
+		assertTrue(startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy(LocalTime.MIDNIGHT)
+				.isTransactionAllowedNow());
+	}
+
+	@Test
+	public void forStartTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy_shouldReturnTrue_IfCurrentTimeIsMaxTime() {
+		assertTrue(
+				startTimeAfterEndTimeSingleTransactionTimeAllowedPeriodPolicy(LocalTime.MAX).isTransactionAllowedNow());
 	}
 }

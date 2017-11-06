@@ -24,10 +24,7 @@ public class SingleTransactionTimeAllowedPeriodPolicy implements TransactionTime
 		if (startAllowedLocalTime.isBefore(endAllowedLocalTime)) {
 			return currentLocalTime.isAfter(startAllowedLocalTime) && currentLocalTime.isBefore(endAllowedLocalTime);
 		} else {
-			// LocalTime.MAX is 23:59:59.999999999
-			return currentLocalTime.isAfter(startAllowedLocalTime) && currentLocalTime.isBefore(LocalTime.MAX)
-					|| currentLocalTime.isAfter(LocalTime.MIDNIGHT) && currentLocalTime.isBefore(endAllowedLocalTime)
-					|| currentLocalTime.equals(LocalTime.MIDNIGHT);
+			return currentLocalTime.isAfter(startAllowedLocalTime) || currentLocalTime.isBefore(endAllowedLocalTime);
 		}
 	}
 
